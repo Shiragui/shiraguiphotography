@@ -78,9 +78,10 @@
 				<div class="content">
 					<header>
 						<h2>My Work</h2>
-						<p>Lorem ipsum dolor sit amet et sapien sed elementum egestas dolore condimentum.
-						Fusce blandit ultrices sapien, in accumsan orci rhoncus eu. Sed sodales venenatis
-						arcu, id varius justo euismod in. Curabitur egestas consectetur magna vitae.</p>
+						<p>Every photo in this gallery holds a special memory—whether it’s the
+                             joy of a graduation, the quiet beauty of a candid moment, or the 
+                             excitement of exploring new places. I believe in creating images 
+                             that let you relive these moments again and again.</p>
 					</header>
 
 					<!-- Gallery  -->
@@ -112,20 +113,64 @@
 			<section id="contact" class="main style3 secondary">
 				<div class="content">
 					<header>
-						<h2>Say Hello.</h2>
-						<p>Lorem ipsum dolor sit amet et sapien sed elementum egestas dolore condimentum.</p>
-					</header>
-					<div class="box">
-						<form method="post" action="#">
-							<div class="fields">
-								<div class="field half"><input type="text" name="name" placeholder="Name" /></div>
-								<div class="field half"><input type="email" name="email" placeholder="Email" /></div>
-								<div class="field"><textarea name="message" placeholder="Message" rows="6"></textarea></div>
-							</div>
-							<ul class="actions special">
-								<li><input type="submit" value="Send Message" /></li>
-							</ul>
-						</form>
+                        <h2>Say Hello.</h2>
+                        <p>Send a text or email for booking inquiries!</p>
+                    </header>
+                    <div class="box">
+
+                    
+                        <form id="contact-form" method="POST" action="https://formspree.io/f/xvgaokwv">
+                            <input type="hidden" name="_captcha" value="false">
+                            <div class="fields">
+                                <div class="field half"><input type="text" name="name" placeholder="Name" required></div>
+                                <div class="field half"><input type="email" name="email" placeholder="Email" required></div>
+                                <div class="field"><textarea name="message" placeholder="Message" rows="6" required></textarea></div>
+                            </div>
+                            <ul class="actions special">
+                                <li><input type="submit" value="Send Message"></li>
+                            </ul>
+                        </form>
+                    
+                        <div id="thank-you" style="display: none; text-align: center;">
+                            <h3>Thank you for reaching out!</h3>
+                            <p>I'll get back to you as soon as I can.</p>
+                        </div>
+                        <div style="text-align: center; margin: 2rem 0;">
+                            <hr style="border: none; border-top: 1px solid #ccc; margin-bottom: 1rem;">
+                            <p> Or contact me directly:</p>
+                            
+                            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=shiraxgui@gmail.com&su=Photography Inquiry&body=Hi Shira," target="_blank" class="button">Email Me</a>
+
+                                <a href="sms:+12622826616" class="button">Text Me</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <script>
+                        const form = document.getElementById("contact-form");
+                        const thankYou = document.getElementById("thank-you");
+                    
+                        form.addEventListener("submit", function(event) {
+                            event.preventDefault();
+                            const data = new FormData(form);
+                            const action = form.action;
+                            
+                            fetch(action, {
+                                method: "POST",
+                                body: data,
+                                headers: { 'Accept': 'application/json' }
+                            }).then(response => {
+                                if (response.ok) {
+                                    form.style.display = "none";
+                                    thankYou.style.display = "block";
+                                } else {
+                                    alert("Oops! Something went wrong. Please try again.");
+                                }
+                            });
+                        });
+                    </script>
+                                       
 					</div>
 				</div>
 			</section>
