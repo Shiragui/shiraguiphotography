@@ -1418,7 +1418,7 @@ input, select, textarea {
 
 /* Gallery */
 
-	.gallery {
+	.gallery {		
 		display: -moz-flex;
 		display: -webkit-flex;
 		display: -ms-flex;
@@ -1430,6 +1430,23 @@ input, select, textarea {
 		width: 45em;
 		max-width: 100%;
 		margin: 0 auto 2em auto;
+		align-items: flex-start;
+	}
+
+	.gallery article {
+		display: flex;
+		align-items: stretch;
+	}
+	
+	.gallery .image {
+		width: 100%;
+	}
+	
+	.gallery .image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
 	}
 
 		.gallery article {
