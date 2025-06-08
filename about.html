@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>About Me | Shira Gui Photography</title>
+    <meta name="description" content="Learn more about Shira Gui, a Columbia University student and photographer specializing in portraits and graduation photos in NYC and Wisconsin.">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
+
+    <!-- Header -->
+    <header id="header">
+        <h1><a href="index.html">Shira Gui</a></h1>
+        <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+        <nav>
+            <ul id="menu" class="hidden">
+                <li><a href="about.html">About Me</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#" onclick="toggleSubmenu(event)">Galleries &#x25BC;</a>
+                    <ul class="submenu hidden" id="submenu">
+                        <li><a href="graduation.html">Graduation</a></li>
+                        <li><a href="headshots.html">Headshots</a></li>
+                        <li><a href="portraits.html">Portraits</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </nav>
+        </header>
+    <!-- About Section -->
+    <div style="width: 100%; text-align: center;">
+        <h2 style="display: inline-block; font-size: 2.5em; margin-top: 1.2em; margin-bottom: -1em;">About Me</h2>
+
+    </div>
+    <section class="main style2 dark" style ="padding-top: 0; margin-top: 0;">
+        <section class="main style2 dark" style="padding-top: 0; margin-top: 0;"></section>
+        <div class="content box style2">
+            
+            <header>
+                <h2>Hi, I'm Shira Gui!</h2>
+            </header>
+            <p>
+                I’m a Columbia University undergrad studying Computer Science, but photography is where I get to slow down and really connect—with people, places, and stories. I’m based in both Wisconsin and New York City.
+            </p>
+            <p>
+                Over time, I moved from a hand-me-down camera to my Canon EOS R6. I specialize in portraits, graduation sessions, and headshots—but more than that, I care about making people feel comfortable and confident in front of the camera.
+            </p>
+            <p>
+                If you're looking for a photographer who cares about the little moments and is as invested in your photos as you are, I’d love to work with you.
+            </p>
+            
+        </div>
+        <div class="about-image">
+            <img src="images/about-me.jpg" alt="Portrait of Shira Gui" />
+        </div>
+    </section>
+    
+
+    <!-- Footer -->
+    <footer id="footer">
+        <ul class="icons">
+            <li><a href="https://www.instagram.com/shira.gui/" target="_blank" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+            <li><a href="https://www.linkedin.com/in/shira-gui/" target="_blank" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+            <li><a href="mailto:shiraxgui@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+            <li><a href="sms:+12622826616" class="icon solid fa-sms"><span class="label">Text</span></a></li>
+        </ul>
+        <ul class="menu">
+            <li>&copy; Shira Gui Photography</li>
+        </ul>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.poptrox.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("menu");
+            menu.classList.toggle("visible");
+        }
+
+        function toggleSubmenu(event) {
+            const submenu = document.getElementById("submenu");
+            submenu.classList.toggle("hidden");
+            event.stopPropagation();
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-icon') && !event.target.matches('.dropdown a')) {
+                const menus = document.querySelectorAll("#menu, .submenu");
+                menus.forEach(menu => {
+                    if (menu.classList.contains("visible")) {
+                        menu.classList.remove("visible");
+                    }
+                });
+            }
+        };
+    </script>
+
+</body>
+</html>

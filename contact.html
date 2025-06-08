@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<!--
+	Shira Gui Photography
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Contact | Shira Gui Photography</title>
+        <meta name="description" content="Get in touch with Shira Gui Photography for booking inquiries, questions, or custom session requests.">
+        <meta name="google-site-verification" content="dmKBwL_oft5oiI3uTqUVd9hnCkNKhQtG-ElzCb" />
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+        <!-- Favicon -->
+        <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+        <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+        <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+        <link rel="manifest" href="favicon/site.webmanifest">
+
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PRV05DWCK9"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-PRV05DWCK9');
+        </script>
+	</head>
+	<body class="is-preload">
+
+        <!-- Header -->
+        <header id="header">
+            <h1><a href="index.html">Shira Gui</a></h1>
+            <!-- Hamburger Menu Icon -->
+            <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+            <nav>
+                <ul id="menu" class="hidden">
+                    <li><a href="about.html">About Me</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <!-- Galleries Dropdown -->
+                    <li class="dropdown">
+                        <a href="#" onclick="toggleSubmenu(event)">Galleries &#x25BC;</a>
+                        <ul class="submenu hidden" id="submenu">
+                            <li><a href="graduation.html">Graduation</a></li>
+                            <li><a href="headshots.html">Headshots</a></li>
+                            <li><a href="portraits.html">Portraits</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Contact Section -->
+        <section id="contact" class="main style3 secondary" style="padding-top: 3rem; padding-bottom: 2rem;">
+
+            <div class="content">
+                <header>
+                    <h2>Contact</h2>
+
+                    <p>Send an email below for booking inquiries!<br>
+                    I am in Waukesha, Wisconsin until August 30, 2025. I will be in NYC after that.<br>
+                    Mention ideal dates, duration, location, # of group members if possible!</p>
+                </header>
+                <div class="box">
+
+                    <form id="contact-form" method="POST" action="https://formspree.io/f/xvgaokwv">
+                        <input type="hidden" name="_captcha" value="false">
+                        <div class="fields">
+                            <div class="field half"><input type="text" name="name" placeholder="Name*" required></div>
+                            <div class="field half"><input type="email" name="email" placeholder="Email*" required></div>
+                            <div class="field half"><input type="tel" name="phone" placeholder="Phone Number*" required></div>
+                            <div class="field half"><input type="text" name="location" placeholder="Location*" required></div>
+                            <div class="field"><textarea name="message" placeholder="Message*" rows="6" required></textarea></div>
+                        </div>
+                        <ul class="actions special">
+                            <li><input type="submit" value="Send Message"></li>
+                        </ul>
+                    </form>
+
+                    <div id="thank-you" style="display: none; text-align: center;">
+                        <h3>Thank you for reaching out!</h3>
+                        <p>I'll get back to you as soon as I can.</p>
+                    </div>
+
+                    <div style="text-align: center; margin: 2rem 0;">
+                        <hr style="border: none; border-top: 1px solid #ccc; margin-bottom: 1rem;">
+                        <p>Or contact me directly via text for faster response time:</p>
+                        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=shiraxgui@gmail.com&su=Photography Inquiry&body=Hi Shira," target="_blank" class="button">Email Me</a>
+                            <a href="sms:+12622826616" class="button" target="_blank">Text Me</a>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    const form = document.getElementById("contact-form");
+                    const thankYou = document.getElementById("thank-you");
+
+                    form.addEventListener("submit", function(event) {
+                        event.preventDefault();
+                        const data = new FormData(form);
+                        const action = form.action;
+
+                        fetch(action, {
+                            method: "POST",
+                            body: data,
+                            headers: { 'Accept': 'application/json' }
+                        }).then(response => {
+                            if (response.ok) {
+                                form.style.display = "none";
+                                thankYou.style.display = "block";
+                            } else {
+                                alert("Oops! Something went wrong. Please try again.");
+                            }
+                        });
+                    });
+                </script>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="footer">
+
+            <!-- Icons -->
+            <ul class="icons">
+                <li><a href="https://www.instagram.com/shira.gui/" target="_blank" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="https://www.linkedin.com/in/shira-gui/" target="_blank" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>                        
+                <li><a href="https://mail.google.com/mail/?view=cm&fs=1&to=shiraxgui@gmail.com&su=Photography Inquiry&body=Hi Shira," target="_blank" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+                <li><a href="sms:+12622826616" class="icon solid fa-sms"><span class="label">Text</span></a></li>
+            </ul>
+
+            <!-- Menu -->
+            <ul class="menu">
+                <li>&copy; Shira Gui Photography</li>
+            </ul>
+        </footer>
+
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/jquery.poptrox.min.js"></script>
+        <script src="assets/js/jquery.scrolly.min.js"></script>
+        <script src="assets/js/jquery.scrollex.min.js"></script>
+        <script src="assets/js/browser.min.js"></script>
+        <script src="assets/js/breakpoints.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
+
+        <script>
+            // Toggle the main dropdown menu
+            function toggleMenu() {
+                const menu = document.getElementById("menu");
+                menu.classList.toggle("visible");
+            }
+
+            // Toggle the submenu inside Galleries
+            function toggleSubmenu(event) {
+                const submenu = document.getElementById("submenu");
+                submenu.classList.toggle("hidden");
+                event.stopPropagation();
+            }
+
+            // Close the menu when clicking outside
+            window.onclick = function(event) {
+                if (!event.target.matches('.menu-icon') && !event.target.matches('.dropdown a')) {
+                    const menus = document.querySelectorAll("#menu, .submenu");
+                    menus.forEach(menu => {
+                        if (menu.classList.contains("visible")) {
+                            menu.classList.remove("visible");
+                        }
+                    });
+                }
+            };
+        </script>
+
+	</body>
+</html>

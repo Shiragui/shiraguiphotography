@@ -44,27 +44,36 @@
     gtag('config', 'G-PRV05DWCK9');
     
 </script>
-
-
-
-        
         
 	</head>
 	<body class="is-preload">
+<!-- Header -->
+<header id="header">
+    <h1><a href="index.html">Shira Gui</a></h1>
+    <!-- Hamburger Menu Icon -->
+    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+    <nav>
+        <ul id="menu" class="hidden">
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <!-- Galleries Dropdown -->
+            <li class="dropdown">
+                <a href="#" onclick="toggleSubmenu(event)">Galleries &#x25BC;</a>
+                <ul class="submenu hidden" id="submenu">
+                    <li><a href="graduation.html">Graduation</a></li>
+                    <li><a href="headshots.html">Headshots</a></li>
+                    <li><a href="portraits.html">Portraits</a></li>
+                </ul>
+            </li>
 
-		<!-- Header -->
-			<header id="header">
-				<h1>Shira Gui</h1>
-				<nav>
-					<ul>
-						<li><a href="#intro">Intro</a></li>
-						<li><a href="#one">What I Do</a></li>
-						<li><a href="#two">Who I Am</a></li>
-						<li><a href="#work">My Work</a></li>
-						<li><a href="#contact">Contact</a></li>
-					</ul>
-				</nav>
-			</header>
+            <li><a href="index.html">Home</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+
+
 
 		<!-- Intro -->
 			<section id="intro" class="main style1 dark fullscreen">
@@ -225,7 +234,7 @@
 				<div class="content">
 					<header>
                         <h2>Say Hello.</h2>
-                        <p>Send an email below for booking inquiries!<br>I am in NYC until May 18th, 2025. I will be in Waukesha, Wisconsin during the summer.
+                        <p>Send an email below for booking inquiries!<br>I am in Waukesha, Wisconsin until August 30, 2025. I will be in NYC after that.
                             <br>Mention ideal dates, duration, location, # of group members if possible!</p>
                     </header>
                     <div class="box">
@@ -320,6 +329,35 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+
+            <script>
+                // Toggle the main dropdown menu
+                function toggleMenu() {
+                    const menu = document.getElementById("menu");
+                    menu.classList.toggle("visible");
+                }
+            
+                // Toggle the submenu inside Galleries
+                function toggleSubmenu(event) {
+                    const submenu = document.getElementById("submenu");
+                    submenu.classList.toggle("hidden");
+                    event.stopPropagation(); // Prevents the parent menu from closing
+                }
+            
+                // Close the menu when clicking outside
+                window.onclick = function(event) {
+                    if (!event.target.matches('.menu-icon') && !event.target.matches('.dropdown a')) {
+                        const menus = document.querySelectorAll("#menu, .submenu");
+                        menus.forEach(menu => {
+                            if (menu.classList.contains("visible")) {
+                                menu.classList.remove("visible");
+                            }
+                        });
+                    }
+                };
+            </script>
+            
+            
 
 	</body>
 </html>
