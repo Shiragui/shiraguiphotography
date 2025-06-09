@@ -2592,6 +2592,7 @@ body:before {
 	.about-image img {
 	  max-width: 100%;
 	  height: auto;
+	  padding: -7em;
 	}
   
 	.content.box.style2 {
