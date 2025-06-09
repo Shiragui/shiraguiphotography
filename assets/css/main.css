@@ -2556,7 +2556,7 @@ body:before {
     gap: 2em;
     max-width: 1000px;
     margin: 4em auto;
-    padding: 0em;
+    padding: 2em;
 }
 
 .about-text {
@@ -2568,6 +2568,34 @@ body:before {
     max-width: 600px;
     width: 100%;
     height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
+
+
+    padding-top: 7em; /* Adjust this value if you want more or less space */
 }
+
+.about-wrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: center;
+	gap: 2em;
+	flex-wrap: wrap;
+  }
+  
+  /* Make image go below text on small screens */
+  @media (max-width: 768px) {
+	.about-wrapper {
+	  flex-direction: column;
+	  align-items: center;
+	}
+  
+	.about-image img {
+	  max-width: 100%;
+	  height: auto;
+	}
+  
+	.content.box.style2 {
+	  width: 100%;
+	  margin: 0 auto;
+	}
+  }
