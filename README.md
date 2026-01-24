@@ -1,12 +1,28 @@
-# My Photography Website
+# 📸 Shira Gui Photography
 
-A personal photography website showcasing my work. Includes interactive galleries, filtering by categories, and a responsive design.  
+Welcome to my personal photography website! Here, you’ll find a collection of my favorite shots, from landscapes to portraits, all curated with love. Explore interactive galleries, filter by categories, and enjoy a fully responsive design.  
 
-**Live Demo:** [https://shiraguiphotography.com](https://shiraguiphotography.com)
+**✨ Live Demo:** [https://shiraguiphotography.com](https://shiraguiphotography.com)
 
 ---
 
-## License
+## 🌟 Features
+
+- Interactive galleries with smooth transitions  
+- Filter photos by category (Portrait, Landscape, Urban, etc.)  
+- Responsive design for desktop, tablet, and mobile  
+- Contact form for inquiries and collaborations  
+
+---
+
+## 🛠️ Tech Stack
+
+- HTML, CSS
+- Netlify for deployment  
+
+---
+
+## 📷 License
 
 **Photos:** All photographs displayed on this website are my original work and are protected by copyright. Do not copy, download, or reuse them without explicit permission.  
 
