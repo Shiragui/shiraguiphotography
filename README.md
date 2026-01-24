@@ -1,6 +1,6 @@
 # 📸 Shira Gui Photography
 
-Welcome to my personal photography website! Here, you’ll find a collection of my favorite shots, from landscapes to portraits, all curated with love. Explore interactive galleries, filter by categories, and enjoy a fully responsive design.  
+Welcome to my personal photography website! Here, you’ll find a collection of my favorite shots, from graduation to professional headshots, all curated with love. Explore interactive galleries, filter by categories, and enjoy a fully responsive design.  
 
 **✨ Live Demo:** [https://shiraguiphotography.com](https://shiraguiphotography.com)
 
@@ -9,9 +9,9 @@ Welcome to my personal photography website! Here, you’ll find a collection of 
 ## 🌟 Features
 
 - Interactive galleries with smooth transitions  
-- Filter photos by category (Portrait, Landscape, Urban, etc.)  
-- Responsive design for desktop, tablet, and mobile  
-- Contact form for inquiries and collaborations  
+- Filter photos by category (Portrait, Graduation, etc.)  
+- Responsive design for desktop, tablet, and mobile
+- Contact form for inquiries and questions
 
 ---
 
