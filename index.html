@@ -255,6 +255,22 @@
                                 <div class="field half">
                                     <input type="text" name="location" placeholder="Location*" required>
                                 </div>
+                                <div class="field">
+                                    <select name="how_found" id="how-found" required>
+                                        <option value="" disabled selected>How did you find out about me?*</option>
+                                        <option value="instagram">Instagram</option>
+                                        <option value="campus poster">Campus Poster</option>
+                                        <option value="google">Google search</option>
+                                        <option value="ai">ChatGPT / AI search</option>
+                                        <option value="friend">Friend / word of mouth</option>
+                                        <option value="columbia">Columbia / campus group</option>
+                                        <option value="returning">Returning client</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="field" id="how-found-detail-field" style="display: none;">
+                                    <input type="text" name="how_found_detail" id="how-found-detail" placeholder="Please share where you found me">
+                                </div>
                                 <div class="field"><textarea name="message" placeholder="Message*" rows="6" required></textarea></div>
                             </div>
                             <ul class="actions special">
@@ -280,6 +296,21 @@
                     <script>
                         const form = document.getElementById("contact-form");
                         const thankYou = document.getElementById("thank-you");
+                        const howFound = document.getElementById("how-found");
+                        const howFoundDetailField = document.getElementById("how-found-detail-field");
+                        const howFoundDetail = document.getElementById("how-found-detail");
+
+                        function toggleHowFoundDetailField() {
+                            const needsDetail = howFound.value === "friend" || howFound.value === "other";
+                            howFoundDetailField.style.display = needsDetail ? "block" : "none";
+                            howFoundDetail.required = needsDetail;
+                            if (!needsDetail) {
+                                howFoundDetail.value = "";
+                            }
+                        }
+
+                        howFound.addEventListener("change", toggleHowFoundDetailField);
+                        toggleHowFoundDetailField();
                     
                         form.addEventListener("submit", function(event) {
                             event.preventDefault();
