@@ -147,10 +147,10 @@
 							leave:		function() { $(this).addClass('inactive'); }
 						});
 
-				// Contact.
-					$('#contact')
+				// Contact (home page only — triggers earlier so the form isn't hidden for long).
+					$('#contact.contact-scroll-reveal')
 						.scrollex({
-							top:		'50%',
+							top:		'10%',
 							delay:		50,
 							initialize:	function() { $(this).addClass('inactive'); },
 							terminate:	function() { $(this).removeClass('inactive'); },
@@ -174,7 +174,7 @@
 						.unscrollex();
 
 				// Contact.
-					$('#contact')
+					$('#contact.contact-scroll-reveal')
 						.unscrollex();
 
 			};
