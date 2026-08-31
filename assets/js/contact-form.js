@@ -4,8 +4,7 @@
   // Edit the heading + intro here — both index.html and contact.html use this.
   const CONTACT_INTRO = {
     title: "Book a session.",
-    body: `Send an email below for booking!<br>I am in San Jose, CA until August 7th, 2026,
-    will be in Hartland, Wisconsin until September 1st, and then in NYC after that.<br>Mention ideal dates, duration, 
+    body: `Send an email below for booking!<br>I am in NYC until June 2027.<br>Mention ideal dates, duration, 
     location, # of group members if possible!`,
   };
 
