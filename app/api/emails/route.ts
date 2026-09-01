@@ -3,8 +3,6 @@ import { withAdminAuth } from "@/lib/api-auth"
 import { createClient } from "@/lib/supabase/server"
 import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 export async function POST(request: Request) {
   return withAdminAuth(async () => {
     const body = await request.json()
@@ -13,6 +11,8 @@ export async function POST(request: Request) {
     if (!to_email?.trim() || !subject?.trim() || !message?.trim()) {
       return NextResponse.json({ error: "To, subject, and message are required" }, { status: 400 })
     }
+
+    const resend = new Resend(process.env.RESEND_API_KEY)
 
     // Send via Resend
     const { error: sendError } = await resend.emails.send({
