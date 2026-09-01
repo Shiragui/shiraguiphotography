@@ -163,11 +163,11 @@ export async function POST(request: Request, { params }: Params) {
     // PDF generation failure is non-fatal — contract is still signed
   }
 
-  // Notify admin (fire-and-forget)
+  // Notify admin
   try {
     const projectData = Array.isArray(contract.projects) ? contract.projects[0] : contract.projects
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://shiraguiphotography.com"
-    sendContractSignedNotification({
+    await sendContractSignedNotification({
       signerName,
       projectName: projectData?.name ?? "Unknown project",
       signedAt,
