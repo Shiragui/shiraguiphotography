@@ -1,7 +1,7 @@
 // Server-only
 import { Resend } from "resend"
 
-function getResend() {
+export function getResend() {
   return new Resend(process.env.RESEND_API_KEY)
 }
 

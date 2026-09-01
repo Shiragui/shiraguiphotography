@@ -41,8 +41,7 @@ export default function AdminLoginPage() {
       return;
     }
 
-    const next = searchParams.get("next") || "/admin";
-    router.push(next);
+    router.push("/admin/verify");
     router.refresh();
   }
 

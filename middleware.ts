@@ -30,6 +30,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isAdminRoute = pathname.startsWith("/admin");
   const isLoginRoute = pathname === "/admin/login";
+  const isVerifyRoute = pathname === "/admin/verify";
 
   if (isAdminRoute && !isLoginRoute) {
     if (!user) {
@@ -50,6 +51,14 @@ export async function middleware(request: NextRequest) {
       const url = request.nextUrl.clone();
       url.pathname = "/admin/login";
       url.searchParams.set("error", "not_admin");
+      return NextResponse.redirect(url);
+    }
+
+    // Require 2FA cookie for all admin pages except the verify page itself
+    if (!isVerifyRoute && request.cookies.get("sg_2fa")?.value !== "1") {
+      const url = request.nextUrl.clone();
+      url.pathname = "/admin/verify";
+      url.searchParams.set("next", pathname);
       return NextResponse.redirect(url);
     }
   }
