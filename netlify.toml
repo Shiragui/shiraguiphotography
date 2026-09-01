@@ -1,0 +1,8 @@
+[build]
+  command = "npm run build"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Existing static pages (about.html, contact.html, etc.) live in /public
+# and are served automatically alongside Next.js routes.

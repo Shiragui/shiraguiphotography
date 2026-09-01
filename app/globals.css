@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+:root {
+  --brand-blue: #005987;
+  --brand-blue-dark: #00334d;
+  --brand-text: #39454b;
+  --brand-muted: #f5f6f7;
+  --brand-border: #e5e6e7;
+}
+
+body {
+  margin: 0;
+  font-family: "Source Sans Pro", "Segoe UI", sans-serif;
+  color: var(--brand-text);
+  background: #fff;
+}
+
+a {
+  color: inherit;
+}
+
+.admin-shell {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #fafbfc 0%, #f5f6f7 100%);
+}
+
+.admin-card {
+  background: #fff;
+  border: 1px solid var(--brand-border);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(57, 69, 75, 0.06);
+}
+
+.admin-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  background: var(--brand-blue);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.admin-button:hover {
+  background: var(--brand-blue-dark);
+}
+
+.admin-button-secondary {
+  background: #fff;
+  color: var(--brand-text);
+  border: 1px solid var(--brand-border);
+}
+
+.admin-button-secondary:hover {
+  background: var(--brand-muted);
+}
+
+.admin-input,
+.admin-select,
+.admin-textarea {
+  width: 100%;
+  border: 1px solid var(--brand-border);
+  border-radius: 8px;
+  padding: 0.75rem 0.9rem;
+  font: inherit;
+  background: #fff;
+}
+
+.admin-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--brand-border);
+}
+
+.admin-table th {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7680;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: #eef4f8;
+  color: var(--brand-blue-dark);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
