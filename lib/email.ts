@@ -1,7 +1,9 @@
 // Server-only
 import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY)
+}
 
 interface GalleryEmailOptions {
   clientName: string
@@ -92,7 +94,7 @@ export async function sendGalleryEmail({
     `— Shira Gui Photography`,
   ].join("\n")
 
-  return resend.emails.send({
+  return getResend().emails.send({
     from: process.env.RESEND_FROM!,
     replyTo: process.env.RESEND_REPLY_TO,
     to: emails,
@@ -162,7 +164,7 @@ export async function sendShareEmail({
     `— Shira Gui Photography`,
   ].join("\n")
 
-  return resend.emails.send({
+  return getResend().emails.send({
     from: process.env.RESEND_FROM!,
     to: toEmail,
     subject: `${galleryName} — gallery shared with you`,
@@ -237,7 +239,7 @@ export async function sendContractEmail({
     `— Shira Gui Photography`,
   ].join("\n")
 
-  return resend.emails.send({
+  return getResend().emails.send({
     from: process.env.RESEND_FROM!,
     replyTo: process.env.RESEND_REPLY_TO,
     to: toEmail,
@@ -302,7 +304,7 @@ export async function sendContractSignedNotification({
 </body>
 </html>`
 
-  return resend.emails.send({
+  return getResend().emails.send({
     from: process.env.RESEND_FROM!,
     to: adminEmail,
     subject: `Contract signed — ${projectName}`,
@@ -361,7 +363,7 @@ export async function sendInquiryNotification({
 </body>
 </html>`
 
-  return resend.emails.send({
+  return getResend().emails.send({
     from: process.env.RESEND_FROM!,
     to: adminEmail,
     subject: `New inquiry from ${name}`,
