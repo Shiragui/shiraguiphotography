@@ -35,6 +35,8 @@ export function PhotoUploadForm({ projectId, initialPhotos, galleryToken, initia
   const [pendingFiles, setPendingFiles] = useState<File[]>([])
   const [coverPhotoId, setCoverPhotoId] = useState<string | null>(initialCoverPhotoId)
   const [settingCover, setSettingCover] = useState<string | null>(null)
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [deleting, setDeleting] = useState(false)
 
   const thumbUrl = (photoId: string) =>
     galleryToken ? `/api/gallery/${galleryToken}/photos/${photoId}?size=thumb` : null
@@ -118,6 +120,38 @@ export function PhotoUploadForm({ projectId, initialPhotos, galleryToken, initia
     }
   }, [])
 
+  function toggleSelect(id: string) {
+    setSelectedIds((prev) => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      return next
+    })
+  }
+
+  function selectAll() {
+    setSelectedIds(new Set(photos.map((p) => p.id)))
+  }
+
+  function deselectAll() {
+    setSelectedIds(new Set())
+  }
+
+  async function deleteSelected() {
+    if (selectedIds.size === 0) return
+    if (!confirm(`Delete ${selectedIds.size} photo${selectedIds.size === 1 ? "" : "s"}? This cannot be undone.`)) return
+
+    setDeleting(true)
+    const ids = Array.from(selectedIds)
+    for (const id of ids) {
+      await fetch(`/api/projects/${projectId}/photos?photoId=${id}`, { method: "DELETE" })
+    }
+    if (coverPhotoId && selectedIds.has(coverPhotoId)) setCoverPhotoId(null)
+    setPhotos((prev) => prev.filter((p) => !selectedIds.has(p.id)))
+    setSelectedIds(new Set())
+    setDeleting(false)
+    router.refresh()
+  }
+
   async function onDelete(photo: Photo) {
     if (!confirm(`Delete "${photo.filename}"?`)) return
     const res = await fetch(`/api/projects/${projectId}/photos?photoId=${photo.id}`, { method: "DELETE" })
@@ -128,6 +162,7 @@ export function PhotoUploadForm({ projectId, initialPhotos, galleryToken, initia
     }
     if (coverPhotoId === photo.id) setCoverPhotoId(null)
     setPhotos((prev) => prev.filter((p) => p.id !== photo.id))
+    setSelectedIds((prev) => { const next = new Set(prev); next.delete(photo.id); return next })
     router.refresh()
   }
 
@@ -239,18 +274,41 @@ export function PhotoUploadForm({ projectId, initialPhotos, galleryToken, initia
 
       {/* Photo grid */}
       <div className="admin-card" style={{ padding: "1.5rem" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
           <h2 style={{ margin: 0 }}>Uploaded photos ({photos.length})</h2>
-          {coverPhotoId && (
-            <button
-              type="button"
-              onClick={clearCover}
-              disabled={settingCover === "clear"}
-              style={{ background: "none", border: "none", color: "#9ca3af", fontSize: "0.82rem", cursor: "pointer", padding: 0 }}
-            >
-              Remove cover photo
-            </button>
-          )}
+          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
+            {coverPhotoId && (
+              <button
+                type="button"
+                onClick={clearCover}
+                disabled={settingCover === "clear"}
+                style={{ background: "none", border: "none", color: "#9ca3af", fontSize: "0.82rem", cursor: "pointer", padding: 0 }}
+              >
+                Remove cover
+              </button>
+            )}
+            {photos.length > 0 && (
+              <>
+                <button
+                  type="button"
+                  onClick={selectedIds.size === photos.length ? deselectAll : selectAll}
+                  style={{ background: "none", border: "1px solid #c8cdd0", borderRadius: 4, color: "#374151", fontSize: "0.82rem", cursor: "pointer", padding: "0.3rem 0.7rem" }}
+                >
+                  {selectedIds.size === photos.length ? "Deselect all" : "Select all"}
+                </button>
+                {selectedIds.size > 0 && (
+                  <button
+                    type="button"
+                    onClick={deleteSelected}
+                    disabled={deleting}
+                    style={{ border: "1px solid #fca5a5", borderRadius: 4, background: "#fff", color: "#b91c1c", fontSize: "0.82rem", cursor: "pointer", padding: "0.3rem 0.7rem" }}
+                  >
+                    {deleting ? "Deleting…" : `Delete ${selectedIds.size} selected`}
+                  </button>
+                )}
+              </>
+            )}
+          </div>
         </div>
 
         {photos.length === 0 ? (
@@ -260,6 +318,7 @@ export function PhotoUploadForm({ projectId, initialPhotos, galleryToken, initia
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "0.75rem" }}>
             {photos.map((photo) => {
               const isCover = photo.id === coverPhotoId
+              const isSelected = selectedIds.has(photo.id)
               const url = thumbUrl(photo.id)!
               return (
                 <div
@@ -268,7 +327,7 @@ export function PhotoUploadForm({ projectId, initialPhotos, galleryToken, initia
                     position: "relative",
                     borderRadius: 8,
                     overflow: "hidden",
-                    border: isCover ? "2px solid #005987" : "2px solid transparent",
+                    border: isSelected ? "2px solid #b91c1c" : isCover ? "2px solid #005987" : "2px solid transparent",
                     background: "#f5f6f7",
                   }}
                 >
@@ -276,6 +335,13 @@ export function PhotoUploadForm({ projectId, initialPhotos, galleryToken, initia
                     src={url}
                     alt={photo.filename}
                     style={{ width: "100%", height: 140, objectFit: "cover", display: "block" }}
+                  />
+                  {/* Selection checkbox */}
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => toggleSelect(photo.id)}
+                    style={{ position: "absolute", top: 6, right: 6, width: 18, height: 18, cursor: "pointer", accentColor: "#b91c1c" }}
                   />
                   {isCover && (
                     <div style={{
@@ -347,11 +413,14 @@ export function PhotoUploadForm({ projectId, initialPhotos, galleryToken, initia
             </p>
             <table className="admin-table">
               <thead>
-                <tr><th>#</th><th>Filename</th><th>Uploaded</th><th></th></tr>
+                <tr><th></th><th>#</th><th>Filename</th><th>Uploaded</th><th></th></tr>
               </thead>
               <tbody>
                 {photos.map((photo, i) => (
                   <tr key={photo.id}>
+                    <td style={{ width: "2rem" }}>
+                      <input type="checkbox" checked={selectedIds.has(photo.id)} onChange={() => toggleSelect(photo.id)} style={{ accentColor: "#b91c1c" }} />
+                    </td>
                     <td style={{ color: "#6b7680", width: "2rem" }}>{i + 1}</td>
                     <td>{photo.filename}</td>
                     <td>{new Date(photo.created_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })}</td>
