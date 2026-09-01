@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Pricing | Shira Gui Photography</title>
+		<meta name="description" content="Photography packages and pricing by Shira Gui — graduation portraits, headshots, events, and more in NYC.">
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+		<!-- Favicon -->
+		<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+		<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+		<link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+		<link rel="manifest" href="favicon/site.webmanifest">
+
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+		<!-- Google tag -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-PRV05DWCK9"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-PRV05DWCK9');
+		</script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+		<header id="header">
+			<h1><a href="index.html">Shira Gui</a></h1>
+			<div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+			<nav>
+				<ul id="menu" class="hidden">
+					<li><a href="about.html">About Me</a></li>
+					<li><a href="pricing.html">Pricing</a></li>
+					<li><a href="contact.html">Contact</a></li>
+					<li class="dropdown">
+						<a href="#" onclick="toggleSubmenu(event)">Galleries &#x25BC;</a>
+						<ul class="submenu hidden" id="submenu">
+							<li><a href="graduation.html">Graduation</a></li>
+							<li><a href="weddings.html">Weddings</a></li>
+							<li><a href="headshots.html">Headshots</a></li>
+							<li><a href="portraits.html">Portraits</a></li>
+						</ul>
+					</li>
+					<li><a href="index.html">Home</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<!-- Packages -->
+		<section id="packages" class="main style3 primary">
+			<div class="content">
+				<div data-packages-section></div>
+				<script src="assets/js/packages.js"></script>
+			</div>
+		</section>
+
+		<!-- Contact -->
+		<section id="contact" class="main style3 secondary">
+			<div class="content">
+				<div data-contact-section></div>
+				<script src="assets/js/contact-form.js"></script>
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<footer id="footer">
+			<ul class="icons">
+				<li><a href="https://www.instagram.com/shiraguiphotography/" target="_blank" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+				<li><a href="https://www.linkedin.com/in/shira-gui/" target="_blank" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+				<li><a href="https://mail.google.com/mail/?view=cm&fs=1&to=shiraxgui@gmail.com&su=Photography Inquiry&body=Hi Shira," target="_blank" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+				<li><a href="sms:+12622826616" class="icon solid fa-sms"><span class="label">Text</span></a></li>
+			</ul>
+			<ul class="menu">
+				<li>&copy; Shira Gui Photography</li>
+			</ul>
+		</footer>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+		<script>
+			function toggleMenu() {
+				const menu = document.getElementById("menu");
+				menu.classList.toggle("visible");
+			}
+			function toggleSubmenu(event) {
+				const submenu = document.getElementById("submenu");
+				submenu.classList.toggle("hidden");
+				event.stopPropagation();
+			}
+			window.onclick = function(event) {
+				if (!event.target.matches('.menu-icon') && !event.target.matches('.dropdown a')) {
+					const menus = document.querySelectorAll("#menu, .submenu");
+					menus.forEach(function(menu) {
+						if (menu.classList.contains("visible")) {
+							menu.classList.remove("visible");
+						}
+					});
+				}
+			};
+		</script>
+
+	</body>
+</html>

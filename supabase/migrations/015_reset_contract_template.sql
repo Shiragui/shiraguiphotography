@@ -1,55 +1,7 @@
--- Contracts feature: contract_templates and contracts tables
-
-CREATE TABLE contract_templates (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name TEXT NOT NULL,
-  body TEXT NOT NULL,
-  is_default BOOLEAN DEFAULT true,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
-CREATE TABLE contracts (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
-  client_id UUID REFERENCES clients(id) ON DELETE SET NULL,
-  body TEXT NOT NULL,
-  sign_token TEXT UNIQUE NOT NULL,
-  status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'sent', 'viewed', 'signed')),
-  signer_name TEXT,
-  signed_at TIMESTAMPTZ,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
-CREATE TRIGGER contract_templates_updated_at BEFORE UPDATE ON contract_templates
-  FOR EACH ROW EXECUTE FUNCTION set_updated_at();
-
-CREATE TRIGGER contracts_updated_at BEFORE UPDATE ON contracts
-  FOR EACH ROW EXECUTE FUNCTION set_updated_at();
-
-CREATE INDEX idx_contracts_project_id ON contracts(project_id);
-CREATE INDEX idx_contracts_sign_token ON contracts(sign_token);
-
-ALTER TABLE contract_templates ENABLE ROW LEVEL SECURITY;
-ALTER TABLE contracts ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "contract_templates_admin_all"
-  ON contract_templates FOR ALL
-  TO authenticated
-  USING (public.is_admin())
-  WITH CHECK (public.is_admin());
-
-CREATE POLICY "contracts_admin_all"
-  ON contracts FOR ALL
-  TO authenticated
-  USING (public.is_admin())
-  WITH CHECK (public.is_admin());
-
--- Seed the default template
-INSERT INTO contract_templates (name, body, is_default) VALUES (
-  'Standard Photography Services Contract',
-  'PHOTOGRAPHY SERVICES AGREEMENT
+-- Overwrite the default template with the current canonical version.
+UPDATE contract_templates
+SET body =
+'PHOTOGRAPHY SERVICES AGREEMENT
 
 This Photography Services Agreement is entered into as of {{date_today}}, between Shira Gui Photography ("Photographer") and {{client_name}} ("Client").
 
@@ -131,8 +83,6 @@ H. SESSION GUIDELINES
 • Please arrive 5–10 minutes before the session start time.
 • Please avoid red or orange food and drinks before the session, as they can stain the face.
 • Please do not bring children who are not being photographed to the session.
-• Creative direction, posing, and editing style are at the Photographer''s discretion and will be consistent with Photographer''s portfolio.
-
 • Creative direction, posing, and editing style are at the Photographer''s discretion and will be consistent with Photographer''s portfolio.',
-  true
-);
+updated_at = NOW()
+WHERE is_default = true;

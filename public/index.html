@@ -59,12 +59,14 @@
     <nav>
         <ul id="menu" class="hidden">
             <li><a href="about.html">About Me</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
             <li><a href="contact.html">Contact</a></li>
             <!-- Galleries Dropdown -->
             <li class="dropdown">
                 <a href="#" onclick="toggleSubmenu(event)">Galleries &#x25BC;</a>
                 <ul class="submenu hidden" id="submenu">
                     <li><a href="graduation.html">Graduation</a></li>
+                    <li><a href="weddings.html">Weddings</a></li>
                     <li><a href="headshots.html">Headshots</a></li>
                     <li><a href="portraits.html">Portraits</a></li>
                 </ul>
@@ -190,54 +192,13 @@
 				</div>
 			</section>
 
-            <!--Packages--><section id="packages" class="main style3 primary">
-    <div class="content">
-        <header>
-            <h2>Photography Packages</h2>
-            <p>Explore my photography packages designed to fit different needs and budgets. 
-                Whether you're looking for a quick session or an in-depth experience, 
-                there's something here for everyone. Please note: Travel beyond 20 minutes may include an additional fee.</p>
-        </header>
-
-        <div class="box">
-            <h3>Solo Portrait, Seniors, or Solo Graduation Session</h3>
-            <p><strong>Price:</strong> $200 for 1 hour, $150 for 30 minutes <br>
-            <strong>Overtime:</strong> $100 per additional half hour<br>
-            <strong>Includes:</strong> Photos consistently edited (40 photos minimum), delivery within 1 week</p>
-        
-            <hr>
-        
-            <h3>Group Graduation Session</h3>
-            <p><strong>Price:</strong> 
-            2–3 people: $120 each | 
-            4–5 people: $90 each | 
-            6–7 people: $70 each<br>
-            <strong>Duration:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 hour&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.5 hours&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.5 hours&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <br>
-            <strong>Includes:</strong> Group shots plus individual portraits for each person, all photos consistently edited (100 photos minimum), delivery within 1 week</p>
-
-            <hr>
-        
-            <h3>Event Coverage: Weddings, Parties, Socials, Formals</h3>
-            <p><strong>Price:</strong> $200 per hour (not including travel fee) — email for a personalized quote<br>
-            <strong>Includes:</strong> Candid and posed shots from events like weddings, parties, socials, or formals, all photos consistently edited, delivery within 2 weeks.</p>
-            <hr>
-            <!--
-            
-
-            <h3>Real Estate Listing Photography</h3>
-            <p><strong>Price:</strong> $170 (≤2000 sq ft), $200 (2000-4000 sq ft), $250+ (4000+ sq ft) <br>
-            <strong>Includes:</strong> 3 photos per room, exterior, and detailed shots as needed, all photos edited and delivered within 3 days.</p>
-        
-            <hr>
-            -->
-        
-            <h3>Custom Sessions</h3>
-            <p><strong>Contact me</strong> for a personalized quote! I'm open to family shoots, birthday parties, or any other special occasions you would like to have captured.</p>
-        </div>
-        
-    </div>
-</section>
+		<!-- Packages -->
+			<section id="packages" class="main style3 primary">
+				<div class="content">
+					<div data-packages-section></div>
+					<script src="assets/js/packages.js"></script>
+				</div>
+			</section>
 
 		<!-- Contact -->
 			<section id="contact" class="main style3 secondary contact-scroll-reveal">
