@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getAdminProfile } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
-import { formatDate, formatProjectStatus } from "@/lib/types";
+import { formatDate } from "@/lib/types";
 
 export default async function ProjectsPage() {
   const profile = await getAdminProfile();
@@ -35,7 +35,6 @@ export default async function ProjectsPage() {
                 <th>Client</th>
                 <th>Type</th>
                 <th>Session date</th>
-                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -60,9 +59,6 @@ export default async function ProjectsPage() {
                   </td>
                   <td>{project.project_type || "—"}</td>
                   <td>{formatDate(project.session_date)}</td>
-                  <td>
-                    <span className="status-pill">{formatProjectStatus(project.status)}</span>
-                  </td>
                 </tr>
               ))}
             </tbody>
