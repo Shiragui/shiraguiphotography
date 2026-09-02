@@ -1,29 +1,21 @@
-# 📸 Shira Gui Photography
+# Shira Gui Photography
 
-Welcome to my personal photography website! Here, you’ll find a collection of my favorite shots, from graduation to professional headshots, all curated with love. Explore interactive galleries, filter by categories, and enjoy a fully responsive design.  
+Personal photography portfolio and client management system. Live at [shiraguiphotography.com](https://shiraguiphotography.com).
 
-**✨ Live Demo:** [https://shiraguiphotography.com](https://shiraguiphotography.com)
+## What this is
 
----
+The public site is a static HTML portfolio with galleries for graduation, weddings, headshots, and portraits. Behind it is a Next.js admin panel for managing clients, projects, photo galleries, and contracts.
 
-## 🌟 Features
+## Tech stack
 
-- Interactive galleries with smooth transitions  
-- Filter photos by category (Portrait, Graduation, etc.)  
-- Responsive design for desktop, tablet, and mobile
-- Contact form for inquiries and questions
+Next.js 15, Supabase (auth, database, storage), Google Drive (photo storage), Resend (email), pdf-lib (contract PDFs), Netlify (deployment).
 
----
+## Admin features
 
-## 🛠️ Tech Stack
+Client and project tracking, private photo galleries with download codes, contract generation and e-signature, Google Drive backup of signed PDFs, email notifications for new inquiries and signed contracts, two-factor authentication via email OTP.
 
-- HTML, CSS
-- Netlify for deployment  
+## Photos
 
----
-
-## 📷 License
-
-**Photos:** All photographs displayed on this website are my original work and are protected by copyright. Do not copy, download, or reuse them without explicit permission.  
+All photographs are my original work and protected by copyright. Do not copy, download, or reuse without explicit permission.
 
 © 2026 Shira Gui. All rights reserved.
