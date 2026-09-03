@@ -55,15 +55,12 @@ export async function GET(request: Request, { params }: Params) {
   // Stream a zip back to the client
   const archive = new ZipArchive({ zlib: { level: 5 } })
 
-  // Add each photo to the archive
   ;(async () => {
     for (const photo of photos) {
       try {
         const stream = await getFileStream(photo.google_drive_file_id)
         archive.append(stream, { name: photo.filename })
-      } catch {
-        // Skip photos that fail to fetch
-      }
+      } catch { /* skip */ }
     }
     archive.finalize()
   })()

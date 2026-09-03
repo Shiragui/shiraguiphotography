@@ -179,19 +179,57 @@ export function GalleryGrid({
   }
 
   const favIdsInGallery = [...favorites].filter(id => photos.some(p => p.id === id))
+  const [downloading, setDownloading] = useState(false)
 
-  function startDownload(photoIds: string[] | null) {
+  async function downloadAsZip(targetPhotoIds: string[] | null) {
     setShowDownloadMenu(false)
-    const base = `/api/gallery/${token}/download-zip`
-    const url = photoIds ? `${base}?ids=${photoIds.join(",")}` : base
-    setDownloadProgress("Preparing download…")
-    const a = document.createElement("a")
-    a.href = url
-    a.download = ""
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    setTimeout(() => setDownloadProgress(null), 3000)
+    const targetPhotos = targetPhotoIds
+      ? photos.filter(p => targetPhotoIds.includes(p.id))
+      : photos
+    if (targetPhotos.length === 0 || downloading) return
+
+    setDownloading(true)
+    const total = targetPhotos.length
+    let completed = 0
+    setDownloadProgress(`Downloading 0 of ${total}…`)
+
+    try {
+      const JSZip = (await import("jszip")).default
+      const zip = new JSZip()
+
+      const CONCURRENCY = 4
+      for (let i = 0; i < targetPhotos.length; i += CONCURRENCY) {
+        const batch = targetPhotos.slice(i, i + CONCURRENCY)
+        await Promise.all(batch.map(async (photo) => {
+          try {
+            const res = await fetch(downloadUrl(photo.id))
+            if (res.ok) {
+              const blob = await res.blob()
+              zip.file(photo.filename, blob, { compression: "STORE" })
+            }
+          } catch { /* skip failed photos */ }
+          completed++
+          setDownloadProgress(`Downloading ${completed} of ${total}…`)
+        }))
+      }
+
+      setDownloadProgress("Creating zip…")
+      const blob = await zip.generateAsync({ type: "blob" })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = `${galleryName.replace(/[^\w\s-]/g, "").trim()}.zip`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+      setDownloadProgress("Download ready!")
+    } catch {
+      setDownloadProgress("Download failed — please try again")
+    } finally {
+      setDownloading(false)
+      setTimeout(() => setDownloadProgress(null), 3000)
+    }
   }
 
   const displayPhotos = showFavOnly ? photos.filter(p => favorites.has(p.id)) : photos
@@ -332,18 +370,18 @@ export function GalleryGrid({
                   overflow: "hidden", minWidth: 210, zIndex: 200,
                   boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
                 }}>
-                  <button type="button" onClick={() => startDownload(null)}
-                    style={{ display: "flex", alignItems: "center", gap: "0.75rem", width: "100%", padding: "0.85rem 1rem", background: "none", border: "none", color: "#d0d0d0", fontSize: "0.82rem", cursor: "pointer", letterSpacing: "0.04em", textAlign: "left" }}
-                    onMouseEnter={e => (e.currentTarget.style.background = "#1a1a1a")}
+                  <button type="button" onClick={() => downloadAsZip(null)} disabled={downloading}
+                    style={{ display: "flex", alignItems: "center", gap: "0.75rem", width: "100%", padding: "0.85rem 1rem", background: "none", border: "none", color: downloading ? "#555" : "#d0d0d0", fontSize: "0.82rem", cursor: downloading ? "default" : "pointer", letterSpacing: "0.04em", textAlign: "left" }}
+                    onMouseEnter={e => { if (!downloading) e.currentTarget.style.background = "#1a1a1a" }}
                     onMouseLeave={e => (e.currentTarget.style.background = "none")}
                   >
                     <DownloadIcon />
                     All photos ({photos.length})
                   </button>
                   {favIdsInGallery.length > 0 && (
-                    <button type="button" onClick={() => startDownload(favIdsInGallery.length > 0 ? favIdsInGallery : null)}
-                      style={{ display: "flex", alignItems: "center", gap: "0.75rem", width: "100%", padding: "0.85rem 1rem", background: "none", border: "none", borderTop: "1px solid #1a1a1a", color: "#d0d0d0", fontSize: "0.82rem", cursor: "pointer", letterSpacing: "0.04em", textAlign: "left" }}
-                      onMouseEnter={e => (e.currentTarget.style.background = "#1a1a1a")}
+                    <button type="button" onClick={() => downloadAsZip(favIdsInGallery)} disabled={downloading}
+                      style={{ display: "flex", alignItems: "center", gap: "0.75rem", width: "100%", padding: "0.85rem 1rem", background: "none", border: "none", borderTop: "1px solid #1a1a1a", color: downloading ? "#555" : "#d0d0d0", fontSize: "0.82rem", cursor: downloading ? "default" : "pointer", letterSpacing: "0.04em", textAlign: "left" }}
+                      onMouseEnter={e => { if (!downloading) e.currentTarget.style.background = "#1a1a1a" }}
                       onMouseLeave={e => (e.currentTarget.style.background = "none")}
                     >
                       <HeartIcon filled />
