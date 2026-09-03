@@ -268,7 +268,7 @@ export function GalleryGrid({
         body: JSON.stringify({ code: codeInput }),
       })
       if (!res.ok) setCodeError((await res.json()).error ?? "Incorrect code")
-      else { setUnlocked(true); setShowUnlockModal(false); setCodeInput("") }
+      else { setUnlocked(true); setCodeInput("") }
     } catch {
       setCodeError("Something went wrong, please try again")
     } finally {
@@ -439,29 +439,54 @@ export function GalleryGrid({
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <div>
-                <p style={{ margin: 0, fontSize: "1rem", fontWeight: 600, color: "#e0e0e0", letterSpacing: "0.04em" }}>Unlock downloads</p>
-                <p style={{ margin: "0.3rem 0 0", fontSize: "0.8rem", color: "#555" }}>Enter the code from your photographer</p>
+                <p style={{ margin: 0, fontSize: "1rem", fontWeight: 600, color: "#e0e0e0", letterSpacing: "0.04em" }}>
+                  {unlocked ? "Downloads unlocked" : "Unlock downloads"}
+                </p>
+                <p style={{ margin: "0.3rem 0 0", fontSize: "0.8rem", color: "#555" }}>
+                  {unlocked ? "Choose what to download below" : "Enter the code from your photographer"}
+                </p>
               </div>
               <button type="button" onClick={() => setShowUnlockModal(false)}
                 style={{ background: "none", border: "none", color: "#555", cursor: "pointer", padding: "2px", lineHeight: 0 }}>
                 <CloseIcon />
               </button>
             </div>
-            <form onSubmit={submitCode} style={{ display: "grid", gap: "0.6rem" }}>
-              <input
-                type="text"
-                value={codeInput}
-                onChange={e => setCodeInput(e.target.value)}
-                placeholder="Download code"
-                autoFocus
-                style={{ padding: "0.65rem 0.9rem", borderRadius: 6, border: "1px solid #2a2a2a", background: "#0a0a0a", color: "#fff", fontSize: "1rem", letterSpacing: "0.12em", textTransform: "uppercase" }}
-              />
-              {codeError && <p style={{ margin: 0, fontSize: "0.82rem", color: "#f87171" }}>{codeError}</p>}
-              <button type="submit" disabled={codeLoading || !codeInput.trim()}
-                style={{ padding: "0.65rem", borderRadius: 6, border: "none", background: "#fff", color: "#000", fontSize: "0.9rem", cursor: "pointer", fontWeight: 600, letterSpacing: "0.06em" }}>
-                {codeLoading ? "Checking…" : "Unlock"}
-              </button>
-            </form>
+            {unlocked ? (
+              <div style={{ display: "grid", gap: "0.6rem" }}>
+                <button
+                  type="button"
+                  onClick={() => { setShowUnlockModal(false); downloadAsZip(null) }}
+                  style={{ padding: "0.7rem", borderRadius: 6, border: "none", background: "#fff", color: "#000", fontSize: "0.9rem", cursor: "pointer", fontWeight: 600, letterSpacing: "0.04em" }}
+                >
+                  Download all photos ({photos.length})
+                </button>
+                {favorites.size > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => { setShowUnlockModal(false); downloadAsZip(Array.from(favorites)) }}
+                    style={{ padding: "0.7rem", borderRadius: 6, border: "1px solid #333", background: "transparent", color: "#e0e0e0", fontSize: "0.9rem", cursor: "pointer", fontWeight: 500, letterSpacing: "0.04em" }}
+                  >
+                    Download favorites ({favorites.size})
+                  </button>
+                )}
+              </div>
+            ) : (
+              <form onSubmit={submitCode} style={{ display: "grid", gap: "0.6rem" }}>
+                <input
+                  type="text"
+                  value={codeInput}
+                  onChange={e => setCodeInput(e.target.value)}
+                  placeholder="Download code"
+                  autoFocus
+                  style={{ padding: "0.65rem 0.9rem", borderRadius: 6, border: "1px solid #2a2a2a", background: "#0a0a0a", color: "#fff", fontSize: "1rem", letterSpacing: "0.12em", textTransform: "uppercase" }}
+                />
+                {codeError && <p style={{ margin: 0, fontSize: "0.82rem", color: "#f87171" }}>{codeError}</p>}
+                <button type="submit" disabled={codeLoading || !codeInput.trim()}
+                  style={{ padding: "0.65rem", borderRadius: 6, border: "none", background: "#fff", color: "#000", fontSize: "0.9rem", cursor: "pointer", fontWeight: 600, letterSpacing: "0.06em" }}>
+                  {codeLoading ? "Checking…" : "Unlock"}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       )}
