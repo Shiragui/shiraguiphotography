@@ -3,27 +3,27 @@
   const PACKAGES_HTML = `
     <header>
       <h2>Photography Packages</h2>
-      <p>Explore my photography packages designed to fit different needs and budgets.
-         Whether you're looking for a quick session or an in-depth experience,
-         there's something here for everyone. Please note: Travel beyond 20 minutes may include an additional fee.</p>
+      <p>Explore my photography packages designed to fit different needs.
+         Please note: Travel beyond 20 minutes may include an additional fee. 
+         All sessions require a $50 deposit to secure the session date and remaining balance is due the day of the session.</p>
     </header>
 
     <div class="box">
       <h3>Solo Portrait, Seniors, or Solo Graduation Session</h3>
-      <p><strong>Price:</strong> $225 for 1 hour<br>
-      <strong>Overtime:</strong> $100 per additional half hour<br>
-      <strong>Includes:</strong> Photos consistently edited (40+ photos), 1 week delivery, online gallery</p>
+      <p><strong>Price:</strong> $250 for 1 hour<br>
+      <strong>Overtime:</strong> $125 per additional half hour<br>
+      <strong>Includes:</strong> Photos consistently edited (30+ photos), 1 week delivery, online gallery</p>
 
       <hr>
 
       <h3>Group Graduation Session</h3>
       <p><strong>Price:</strong>
-      2–3 people: $120 each |
-      4–5 people: $90 each |
-      6–7 people: $70 each<br>
+      2–3 people: $145 each |
+      4–5 people: $110 each |
+      6–7 people: $85 each<br>
       <strong>Duration:</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 hour&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.5 hours&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.5 hours&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <br>
-      <strong>Includes:</strong> Group shots + individual portraits, photos consistently edited (80+ photos), 1 week delivery, online gallery</p>
+      <strong>Includes:</strong> Group shots + individual portraits, photos consistently edited (60+ photos), 1 week delivery, online gallery</p>
 
       <hr>
 
