@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Privacy Policy | Shira Gui Photography</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
+
+    <!-- Header -->
+    <header id="header">
+        <h1><a href="index.html">Shira Gui</a></h1>
+        <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+        <nav>
+            <ul id="menu" class="hidden">
+                <li><a href="about.html">About Me</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#" onclick="toggleSubmenu(event)">Galleries &#x25BC;</a>
+                    <ul class="submenu hidden" id="submenu">
+                        <li><a href="graduation.html">Graduation</a></li>
+                        <li><a href="weddings.html">Weddings</a></li>
+                        <li><a href="headshots.html">Headshots</a></li>
+                        <li><a href="portraits.html">Portraits</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Privacy Policy -->
+    <section class="main style2 dark">
+        <div class="content box style2" style="max-width: 720px;">
+            <header>
+                <h2>Privacy Policy</h2>
+                <p>Last updated: September 2026</p>
+            </header>
+
+            <h3>Overview</h3>
+            <p>Shira Gui Photography operates shiraguiphotography.com and a private client portal for managing photo galleries and contracts. This policy explains how I collect, use, and protect your information.</p>
+
+            <h3>Information I Collect</h3>
+            <p>I collect information you provide directly, including your name, email address, phone number, and any details submitted through the contact form or client portal. I also store photos taken during photography sessions securely on Google Drive.</p>
+
+            <h3>How I Use Your Information</h3>
+            <p>I use your information to deliver photography services, share your photo gallery with you, send contracts for signature, and communicate about your session. I do not sell or share your personal information with third parties for marketing purposes.</p>
+
+            <h3>Photo Storage</h3>
+            <p>Your photos are stored on Google Drive and accessed through your private gallery link. Gallery access requires a unique token and, for downloads, a download code provided by me.</p>
+
+            <h3>Cookies</h3>
+            <p>The client portal uses cookies to maintain your session and remember that you have unlocked your gallery downloads. No tracking or advertising cookies are used.</p>
+
+            <h3>Data Retention</h3>
+            <p>Your photos and contract information are retained for the duration of our relationship. You may request deletion of your data at any time by contacting me.</p>
+
+            <h3>Contact</h3>
+            <p>For questions about this policy or your data, contact me at <a href="mailto:shiraxgui@gmail.com" style="color: #005987;">shiraxgui@gmail.com</a>.</p>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer id="footer">
+        <ul class="menu">
+            <li>&copy; Shira Gui Photography</li>
+        </ul>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("menu");
+            menu.classList.toggle("visible");
+        }
+        function toggleSubmenu(event) {
+            const submenu = document.getElementById("submenu");
+            submenu.classList.toggle("hidden");
+            event.stopPropagation();
+        }
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-icon') && !event.target.matches('.dropdown a')) {
+                const menus = document.querySelectorAll("#menu, .submenu");
+                menus.forEach(function(menu) {
+                    if (menu.classList.contains("visible")) {
+                        menu.classList.remove("visible");
+                    }
+                });
+            }
+        };
+    </script>
+
+</body>
+</html>
