@@ -1,6 +1,7 @@
 # Shira Gui Photography
 
 Personal photography portfolio and client management system. Live at [shiraguiphotography.com](https://shiraguiphotography.com).
+Check out a gallery here: https://shiraguiphotography.com/gallery/khpRuUy_m3WJtBjHOGcLBMYLtpjkOD4q
 
 ## What this is
 
