@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server"
+import { NextResponse, after } from "next/server"
 import { createServiceClient } from "@/lib/supabase/service"
 import { sendInquiryNotification } from "@/lib/email"
 
@@ -31,8 +31,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Failed to save" }, { status: 500 })
     }
 
-    // Notify photographer — fire and forget
-    sendInquiryNotification({ name, email, phone: body.phone, location: body.location, message: body.message, howFound: body.how_found }).catch(() => {})
+    // Notify photographer — runs after the response is sent, but `after()`
+    // keeps the serverless function alive until it finishes instead of
+    // letting the platform freeze/kill it mid-request.
+    after(() =>
+      sendInquiryNotification({ name, email, phone: body.phone, location: body.location, message: body.message, howFound: body.how_found }).catch((err) => {
+        console.error("Failed to send inquiry notification email:", err)
+      })
+    )
 
     return NextResponse.json({ ok: true }, { status: 201 })
   } catch {
