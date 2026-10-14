@@ -1,20 +1,9 @@
 import { NextResponse } from "next/server"
 import { requireAdminProfile } from "@/lib/auth"
 import { createServiceClient } from "@/lib/supabase/service"
-import { getFileStream } from "@/lib/drive"
-import { Readable } from "stream"
+import { getFileStream, nodeToWebStream, safeContentDispositionFilename } from "@/lib/drive"
 
 type Params = { params: Promise<{ id: string }> }
-
-function nodeToWebStream(nodeStream: Readable): ReadableStream<Uint8Array> {
-  return new ReadableStream({
-    start(controller) {
-      nodeStream.on("data", (chunk) => controller.enqueue(new Uint8Array(chunk)))
-      nodeStream.on("end", () => controller.close())
-      nodeStream.on("error", (err) => controller.error(err))
-    },
-  })
-}
 
 export async function GET(_request: Request, { params }: Params) {
   try {
@@ -51,7 +40,7 @@ export async function GET(_request: Request, { params }: Params) {
   const safeDate = contract.signed_at
     ? new Date(contract.signed_at).toISOString().slice(0, 10)
     : "signed"
-  const safeName = (contract.signer_name ?? "contract").replace(/\s+/g, "_").replace(/[^\x20-\x7E]/g, "")
+  const safeName = safeContentDispositionFilename(contract.signer_name ?? "contract")
   const filename = `${safeName}_contract_${safeDate}.pdf`
 
   const webStream = nodeToWebStream(driveStream)

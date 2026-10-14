@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import { createServiceClient } from "@/lib/supabase/service"
 import { generateContractPdf } from "@/lib/contract-pdf"
 import { getOrCreateProjectFolder, uploadFileToDrive } from "@/lib/drive"
-import { sendContractSignedNotification } from "@/lib/email"
+import { sendContractSignedNotification, sendSignedContractCopyEmail } from "@/lib/email"
 import { Readable } from "stream"
 
 type Params = { params: Promise<{ token: string }> }
@@ -85,7 +85,7 @@ export async function POST(request: Request, { params }: Params) {
       body,
       project_id,
       projects(name),
-      clients(name)
+      clients(name, email)
     `)
     .eq("sign_token", token)
     .maybeSingle()
@@ -163,18 +163,37 @@ export async function POST(request: Request, { params }: Params) {
     // PDF generation failure is non-fatal — contract is still signed
   }
 
-  // Notify admin
+  // Notify admin + send the client their own copy — both non-fatal
+  const projectData = Array.isArray(contract.projects) ? contract.projects[0] : contract.projects
+  const clientData = Array.isArray(contract.clients) ? contract.clients[0] : contract.clients
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://shiraguiphotography.com"
+  const pdfUrl = `${siteUrl}/api/sign/${token}/pdf`
+
   try {
-    const projectData = Array.isArray(contract.projects) ? contract.projects[0] : contract.projects
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://shiraguiphotography.com"
     await sendContractSignedNotification({
       signerName,
       projectName: projectData?.name ?? "Unknown project",
       signedAt,
       photoRelease,
+      pdfUrl,
       adminProjectUrl: `${siteUrl}/admin/projects/${contract.project_id}/edit`,
     })
-  } catch { /* non-fatal */ }
+  } catch (err) {
+    console.error("Failed to send contract-signed admin notification:", err)
+  }
+
+  if (clientData?.email) {
+    try {
+      await sendSignedContractCopyEmail({
+        toEmail: clientData.email,
+        clientName: clientData.name ?? signerName,
+        projectName: projectData?.name ?? "your session",
+        pdfUrl,
+      })
+    } catch (err) {
+      console.error("Failed to send signed contract copy to client:", err)
+    }
+  }
 
   return NextResponse.json({ ok: true, pdf: pdfBase64 })
 }

@@ -24,6 +24,7 @@ export default async function SignContractPage({ params }: Params) {
       signer_name,
       signed_at,
       sign_token,
+      pdf_drive_id,
       projects(name),
       clients(name)
     `)
@@ -136,6 +137,27 @@ export default async function SignContractPage({ params }: Params) {
               <strong>{contract.signer_name}</strong>
               {contract.signed_at ? ` on ${formatDate(contract.signed_at)}` : ""}.
             </p>
+            {contract.pdf_drive_id && (
+              <div style={{ marginTop: "1.5rem" }}>
+                <a
+                  href={`/api/sign/${token}/pdf`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-block",
+                    background: "#1a1a1a",
+                    color: "#fff",
+                    textDecoration: "none",
+                    fontSize: "0.85rem",
+                    letterSpacing: "0.05em",
+                    padding: "0.7rem 1.5rem",
+                    borderRadius: 8,
+                  }}
+                >
+                  View signed contract (PDF)
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>

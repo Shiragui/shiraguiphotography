@@ -91,3 +91,17 @@ export async function deleteFile(driveFileId: string): Promise<void> {
   const drive = getDriveClient()
   await drive.files.delete({ fileId: driveFileId })
 }
+
+export function nodeToWebStream(nodeStream: Readable): ReadableStream<Uint8Array> {
+  return new ReadableStream({
+    start(controller) {
+      nodeStream.on("data", (chunk) => controller.enqueue(new Uint8Array(chunk)))
+      nodeStream.on("end", () => controller.close())
+      nodeStream.on("error", (err) => controller.error(err))
+    },
+  })
+}
+
+export function safeContentDispositionFilename(name: string): string {
+  return name.replace(/\s+/g, "_").replace(/[^\x20-\x7E]/g, "")
+}

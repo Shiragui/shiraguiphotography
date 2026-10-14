@@ -254,12 +254,14 @@ export async function sendContractSignedNotification({
   projectName,
   signedAt,
   photoRelease,
+  pdfUrl,
   adminProjectUrl,
 }: {
   signerName: string
   projectName: string
   signedAt: string
   photoRelease: boolean
+  pdfUrl: string
   adminProjectUrl: string
 }) {
   const adminEmail = process.env.RESEND_REPLY_TO ?? process.env.RESEND_FROM!
@@ -295,10 +297,13 @@ export async function sendContractSignedNotification({
         </tr>
       </table>
       <div style="text-align:center;margin-top:28px;">
-        <a href="${adminProjectUrl}" style="display:inline-block;background:#1a1a1a;color:#fff;text-decoration:none;font-size:13px;letter-spacing:0.08em;padding:12px 28px;border-radius:6px;">
-          View contract →
+        <a href="${pdfUrl}" style="display:inline-block;background:#1a1a1a;color:#fff;text-decoration:none;font-size:13px;letter-spacing:0.08em;padding:12px 28px;border-radius:6px;">
+          View signed PDF →
         </a>
       </div>
+      <p style="text-align:center;margin:16px 0 0;">
+        <a href="${adminProjectUrl}" style="font-size:12px;color:#888;">Manage this project in admin</a>
+      </p>
     </div>
   </div>
 </body>
@@ -309,7 +314,69 @@ export async function sendContractSignedNotification({
     to: adminEmail,
     subject: `Contract signed — ${projectName}`,
     html,
-    text: `${signerName} signed the contract for ${projectName} on ${formattedDate}.\nPhoto release: ${photoRelease ? "Yes" : "No"}\n\nView: ${adminProjectUrl}`,
+    text: `${signerName} signed the contract for ${projectName} on ${formattedDate}.\nPhoto release: ${photoRelease ? "Yes" : "No"}\n\nView signed PDF: ${pdfUrl}\nManage in admin: ${adminProjectUrl}`,
+  })
+}
+
+export async function sendSignedContractCopyEmail({
+  toEmail,
+  clientName,
+  projectName,
+  pdfUrl,
+}: {
+  toEmail: string
+  clientName: string
+  projectName: string
+  pdfUrl: string
+}) {
+  const firstName = clientName.split(" ")[0]
+
+  const html = `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+<body style="margin: 0; padding: 0; background: #f4f4f2; font-family: 'Georgia', serif;">
+  <div style="max-width: 560px; margin: 48px auto; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+    <div style="background: #1a1a1a; padding: 28px 40px; text-align: center;">
+      <p style="margin: 0; font-size: 13px; letter-spacing: 0.2em; color: #aaa; text-transform: uppercase;">Shira Gui Photography</p>
+    </div>
+    <div style="padding: 40px 40px 32px;">
+      <h1 style="margin: 0 0 16px; font-size: 22px; font-weight: 400; color: #1a1a1a;">Thanks for signing, ${firstName}.</h1>
+      <p style="margin: 0 0 16px; font-size: 15px; color: #444; line-height: 1.6;">
+        Here's a copy of your signed photography services agreement for <strong>${projectName}</strong> for your records.
+      </p>
+      <div style="text-align: center; margin: 32px 0;">
+        <a href="${pdfUrl}" style="display: inline-block; background: #1a1a1a; color: #fff; text-decoration: none; font-size: 14px; letter-spacing: 0.08em; padding: 14px 32px; border-radius: 6px;">
+          View Signed Contract
+        </a>
+      </div>
+      <p style="margin: 24px 0 0; font-size: 13px; color: #999; line-height: 1.6;">
+        If the button doesn't work, copy this link into your browser:<br>
+        <a href="${pdfUrl}" style="color: #666; word-break: break-all;">${pdfUrl}</a>
+      </p>
+    </div>
+    <div style="padding: 24px 40px; border-top: 1px solid #eee; text-align: center;">
+      <p style="margin: 0; font-size: 12px; color: #bbb;">© Shira Gui Photography</p>
+    </div>
+  </div>
+</body>
+</html>`
+
+  const text = [
+    `Hi ${firstName},`,
+    ``,
+    `Here's a copy of your signed photography services agreement for ${projectName}:`,
+    `${pdfUrl}`,
+    ``,
+    `— Shira Gui Photography`,
+  ].join("\n")
+
+  return getResend().emails.send({
+    from: process.env.RESEND_FROM!,
+    replyTo: process.env.RESEND_REPLY_TO,
+    to: toEmail,
+    subject: `Your signed contract — ${projectName}`,
+    html,
+    text,
   })
 }
 
