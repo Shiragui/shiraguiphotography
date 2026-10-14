@@ -30,7 +30,13 @@ export async function GET(_request: Request, { params }: Params) {
     return NextResponse.json({ error: "No PDF available for this contract" }, { status: 404 })
   }
 
-  const driveStream = await getFileStream(contract.pdf_drive_id)
+  let driveStream
+  try {
+    driveStream = await getFileStream(contract.pdf_drive_id)
+  } catch (err) {
+    console.error(`Failed to fetch contract PDF from Drive (file ${contract.pdf_drive_id}):`, err)
+    return NextResponse.json({ error: "This contract's PDF could not be loaded from storage" }, { status: 502 })
+  }
 
   const safeDate = contract.signed_at
     ? new Date(contract.signed_at).toISOString().slice(0, 10)
