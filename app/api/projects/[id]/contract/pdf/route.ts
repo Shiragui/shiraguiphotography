@@ -51,7 +51,7 @@ export async function GET(_request: Request, { params }: Params) {
   const safeDate = contract.signed_at
     ? new Date(contract.signed_at).toISOString().slice(0, 10)
     : "signed"
-  const safeName = (contract.signer_name ?? "contract").replace(/\s+/g, "_")
+  const safeName = (contract.signer_name ?? "contract").replace(/\s+/g, "_").replace(/[^\x20-\x7E]/g, "")
   const filename = `${safeName}_contract_${safeDate}.pdf`
 
   const webStream = nodeToWebStream(driveStream)
