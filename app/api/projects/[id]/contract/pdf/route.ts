@@ -6,6 +6,16 @@ import { Readable } from "stream"
 
 type Params = { params: Promise<{ id: string }> }
 
+function nodeToWebStream(nodeStream: Readable): ReadableStream<Uint8Array> {
+  return new ReadableStream({
+    start(controller) {
+      nodeStream.on("data", (chunk) => controller.enqueue(new Uint8Array(chunk)))
+      nodeStream.on("end", () => controller.close())
+      nodeStream.on("error", (err) => controller.error(err))
+    },
+  })
+}
+
 export async function GET(_request: Request, { params }: Params) {
   try {
     await requireAdminProfile()
@@ -44,9 +54,9 @@ export async function GET(_request: Request, { params }: Params) {
   const safeName = (contract.signer_name ?? "contract").replace(/\s+/g, "_")
   const filename = `${safeName}_contract_${safeDate}.pdf`
 
-  const webStream = Readable.toWeb(driveStream) as ReadableStream
+  const webStream = nodeToWebStream(driveStream)
 
-  return new Response(webStream, {
+  return new NextResponse(webStream as unknown as BodyInit, {
     headers: {
       "Content-Type": "application/pdf",
       "Content-Disposition": `inline; filename="${filename}"`,
